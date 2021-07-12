@@ -30,7 +30,7 @@ import {
       try {
         dispatch({ type: SHOP_LIST_REQUEST })
     
-        const { data } = await axios.get('http://192.168.0.105:8080/api/shops')
+        const { data } = await axios.get('http://192.168.1.102:8080/api/shops')
     
         dispatch({
           type: SHOP_LIST_SUCCESS,

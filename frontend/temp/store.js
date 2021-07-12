@@ -1,29 +1,24 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { shopListReducer,shopDetailsReducer } from './reducers/shopReducers'
+import { productListReducer,productDetailsReducer } from './reducers/productReducers'
 import { cartReducer } from './reducers/cartReducers'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const reducer = combineReducers({
   cart:cartReducer,
-  shopList:shopListReducer,
-  shopDetails:shopDetailsReducer,
 })
 
-const getData = async () => {
-  try {
-    const jsonValue = await AsyncStorage.getItem('@storage_Key')
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
-  }catch(e){
 
-  }
-}
+const cartItemsFromStorage = AsyncStorage.getItem('cartItems')
+  ? JSON.parse(AsyncStorage.getItem('cartItems'))
+  : []
+
 
   const initialState = {
     cart: {
-      cartItems: [getData()],
+      cartItems: cartItemsFromStorage,
     },
   }
 const middleware = [thunk]

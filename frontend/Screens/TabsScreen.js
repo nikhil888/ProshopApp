@@ -11,6 +11,7 @@ const Tabs = createBottomTabNavigator();
 export default TabsScreen = () => (
     <Tabs.Navigator>
       <Tabs.Screen name="Maps" component={MapScreen} />
+      <Tabs.Screen name="List" component={ListScreen} />
      
     </Tabs.Navigator>
   );

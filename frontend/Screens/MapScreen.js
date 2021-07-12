@@ -2,12 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { View, FlatList, useWindowDimensions, TextInput } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import places from "../data/feed";
+// import shops from "../data/feed";
 import { useDispatch,useSelector} from 'react-redux'
 import {listshops} from '../actions/shopActions'
 import CustomMarker from "../components/CustomMarker";
-import PostCarousel from "../components/PostCarousel/PostCarousel";
-import { SearchBar } from "react-native-elements";
+import PostCarousel from "../components/PostCarousel/PostCarousel"
+import SearchBox from "../components/SearchBox"
+import MapDrawer from "../components/MapDrawer";
 
 const MapScreen = (props) => {
 
@@ -42,20 +43,21 @@ const MapScreen = (props) => {
     const index = shops.findIndex((shop) => shop.id === selectedPlaceId);
     flatlist.current.scrollToIndex({ index });
 
-    const selectedPlace = places[index];
+    const selectedPlace = shops[index];
     const region = {
       latitude: selectedPlace.latitude,
       longitude: selectedPlace.longitude,
       latitudeDelta: 0.8,
       longitudeDelta: 0.8,
     };
-    map.current.animateToRegion(region);
   }, [selectedPlaceId]);
 
   return (
     <View style={{ width: "100%", height: "100%" }}>
+      <MapDrawer/>
+      <SearchBox/>
       <MapView
-        ref={map}
+        // ref={map}
         style={{ width: "100%", height: "100%" }}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
@@ -68,25 +70,25 @@ const MapScreen = (props) => {
         {shops.map((shop) => (
           <CustomMarker
             coordinate={shop.coordinate}
-            price={shop.name}
-            isSelected={shop.id === selectedPlaceId}
-            onPress={() => setSelectedPlaceId(shop.id)}
+            name={shop.name}
+             isSelected={shop.id === selectedPlaceId}
+             onPress={() => setSelectedPlaceId(shop.id)}
           />
         ))}
       </MapView>
 
       <View style={{ position: "absolute", bottom: 10 }}>
         <FlatList
-          ref={flatlist}
+           ref={flatlist}
           data={shops}
-          renderItem={({ item }) => <PostCarousel post={item} />}
+          renderItem={({ item }) => <PostCarousel product={item} />}
           horizontal
           showsHorizontalScrollIndicator={false}
           snapToInterval={width - 60}
           snapToAlignment={"center"}
           decelerationRate={"fast"}
-          viewabilityConfig={viewConfig.current}
-          onViewableItemsChanged={onViewChanged.current}
+           viewabilityConfig={viewConfig.current}
+           onViewableItemsChanged={onViewChanged.current}
         />
       </View>
     </View>

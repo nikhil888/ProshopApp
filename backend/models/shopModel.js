@@ -4,19 +4,24 @@ const coordinateSchema = mongoose.Schema(
   {
     latitude: { type: Number, required: true },
     longitude: { type: Number, required: true },
-  },
-  {
-    timestamps: true,
   }
+)
+
+const shopProductsSchema = mongoose.Schema(
+  {
+    id: { type: Number, required: true },
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
+  },
 )
 
 
 const shopSchema = mongoose.Schema(
     {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User',
+      id:{
+        type:Number,
+        required:true,
       },
       name: {
         type: String,
@@ -26,15 +31,12 @@ const shopSchema = mongoose.Schema(
         type: String,
         required: true,
       },
-      category: {
-        type: String,
-        required: true,
-      },
       description: {
         type: String,
         required: true,
       },
-      coordinate:[coordinateSchema],
+      coordinate:coordinateSchema,
+      shopProducts:[shopProductsSchema],
     },
     {
       timestamps: true,

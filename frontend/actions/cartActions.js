@@ -1,30 +1,24 @@
-import axios from 'axios'
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
-import { AsyncStorage } from 'react-native';
+import { CART_ADD_ITEM,
+   CART_REMOVE_ITEM,
+   CART_SAVE_SHIPPING_ADDRESS,
+   CART_SAVE_PAYMENT_METHOD,
+  } from '../constants/cartConstants'
+  import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(`http://192.168.1.101:8080/api/products/${id}`)
+export const addToCart = (id,name) => async (dispatch, getState) => {
+  // const { data } = await axios.get(`/api/products/${id}`)
+
 
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
-      product: data._id,
-      name: data.name,
-      image: data.image,
-      price: data.price,
-      countInStock: data.countInStock,
-      qty,
+      product: id,
+      name:name,
     },
   })
 
-  AsyncStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+  AsyncStorage.setItem('@storage_Key', JSON.stringify(getState().cart.cartItems))
 }
 
-export const removeFromCart = (id) => (dispatch, getState) => {
-  dispatch({
-    type: CART_REMOVE_ITEM,
-    payload: id,
-  })
 
-  AsyncStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
-}
+

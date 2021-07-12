@@ -28,11 +28,16 @@ const styles = StyleSheet.create({
     height: '100%',
     aspectRatio: 1,
     resizeMode: 'cover',
+    width: '46%',
+    borderRadius: 100,
+    justifyContent: 'flex-start',
   },
 
-  bedrooms: {
+  name: {
     marginVertical: 10,
     color: '#5b5b5b',
+    fontSize: 65,
+    fontWeight: 'bold',
   },
   description: {
     fontSize: 15,
